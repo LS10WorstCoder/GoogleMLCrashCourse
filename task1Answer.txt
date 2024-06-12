@@ -1,4 +1,2 @@
 No, floats are not a good wy to represent latitude and longitude,
-instead bining would be more appropriate combined with one-hot encoding
-to give the model smaller feature vectors and not masssive float
-values expecilly because the true float values have no effect on the house prices
+instead bining would be more appropriate combined put together into a cross feature
