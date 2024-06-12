@@ -1,0 +1,2 @@
+A better way to represent latitude andlongitude would be feature crossing
+(I should try to give the coresponding amount of dimensions to objects as they have in the real world)

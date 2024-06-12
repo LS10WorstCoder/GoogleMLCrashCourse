@@ -3,7 +3,8 @@
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-from tensorflow.keras import layers
+import keras
+from keras import layers
 
 from matplotlib import pyplot as plt
 
@@ -176,6 +177,59 @@ learning_rate = 0.04
 epochs = 35
 
 # Build the model.
+my_model = create_model(inputs, outputs, learning_rate)
+
+# Train the model on the training set.
+epochs, rmse = train_model(my_model, train_df, epochs, batch_size, label_name)
+
+# Print out the model summary.
+my_model.summary(expand_nested=True)
+
+plot_the_loss_curve(epochs, rmse)
+
+print("\n: Evaluate the new model against the test set:")
+my_model.evaluate(x=test_features, y=test_label, batch_size=batch_size)
+
+resolution_in_degrees = 1.0
+
+# Create a list of numbers representing the bucket boundaries for latitude.
+latitude_boundaries = list(np.arange(int(min(train_df['latitude'])),
+                                     int(max(train_df['latitude'])),
+                                     resolution_in_degrees))
+
+# Create a Discretization layer to separate the latitude data into buckets.
+latitude = tf.keras.layers.Discretization(
+    bin_boundaries=latitude_boundaries,
+    name='discretization_latitude')(inputs.get('latitude'))
+
+# Create a list of numbers representing the bucket boundaries for longitude.
+longitude_boundaries = list(np.arange(int(min(train_df['longitude'])),
+                                      int(max(train_df['longitude'])),
+                                      resolution_in_degrees))
+
+# Create a Discretization layer to separate the longitude data into buckets.
+longitude = tf.keras.layers.Discretization(
+    bin_boundaries=longitude_boundaries,
+    name='discretization_longitude')(inputs.get('longitude'))
+
+# Cross the latitude and longitude features into a single one-hot vector.
+feature_cross = tf.keras.layers.HashedCrossing(
+    num_bins=len(latitude_boundaries) * len(longitude_boundaries),
+    output_mode='one_hot',
+    name='cross_latitude_longitude')([latitude, longitude])
+
+dense_output = layers.Dense(units=1, name='dense_layer')(feature_cross)
+
+# Define an output dictionary we'll send to the model constructor.
+outputs = {
+  'dense_output': dense_output
+}
+
+# The following variables are the hyperparameters.
+learning_rate = 0.04
+epochs = 35
+
+# Build the model, this time passing in the feature_cross_feature_layer:
 my_model = create_model(inputs, outputs, learning_rate)
 
 # Train the model on the training set.
