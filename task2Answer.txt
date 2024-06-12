@@ -1,0 +1,2 @@
+the second model had a smaller rmse (101 vs 110)
+showing that binning (wo one-hot) did infact help minimize loss
