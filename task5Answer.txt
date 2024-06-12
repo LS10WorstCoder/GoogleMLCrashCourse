@@ -1,0 +1,7 @@
+tried .5 for "resolution_in_degrees" got 93 rmse
+tried .4 for "resolution_in_degrees" got 88.6 rmse
+
+cells get too small at a certain point (in this case after val gets below .4)
+so there isnt enough data to occup enough of the smaller cells
+
+postal codes wouldn't need feature crossing and could be dealt with using one-hot encoding
