@@ -1,0 +1,1 @@
+the model traied on feature corssing had a n rmse of 96 compared to the binning method that had an rmse of 101.
