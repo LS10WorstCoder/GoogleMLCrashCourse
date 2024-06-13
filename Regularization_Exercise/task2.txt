@@ -1,0 +1,4 @@
+1. the test loss in task 2 is significantly smaller than it is in part one
+2. d(test|training) = -0.046
+3. every weight other than x1 and x2 become significantly smaller and weights of x1 and x2 are reduced and made equal
+4. the results show that this model was made less complex with the significant decrease of the weights
