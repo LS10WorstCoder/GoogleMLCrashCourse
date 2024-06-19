@@ -1,0 +1,2 @@
+for classification threshold I tried the following values:
+.5 then .8 then lower again because the precision skyroceted at .8 (expected) and then I went back down to .525 (seemed to be the highest acuracy I was going to get)
